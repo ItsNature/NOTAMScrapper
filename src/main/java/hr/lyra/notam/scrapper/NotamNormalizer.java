@@ -1,5 +1,6 @@
-package hr.lyra.scrapper;
+package hr.lyra.notam.scrapper;
 
+import hr.lyra.Manager;
 import hr.lyra.notam.Notam;
 import hr.lyra.utils.FileUtils;
 
@@ -8,7 +9,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 /**
  * Notam example:
@@ -22,34 +23,36 @@ import java.util.function.Predicate;
 
 public class NotamNormalizer {
 
-    private static final Predicate<String> NOTAM_START_PREDICATE = entry ->
-        entry.startsWith("(") && entry.contains("NOTAM");
+    private static final Pattern NOTAM_START = Pattern.compile("^[(].*NOTAM");
 
-    public void createNotams() {
+    public void normalize() {
+        var notams = this.createNotams();
+        var notamManager = Manager.getInstance().getNotamManager();
+
+        notamManager.updateNotams(notams);
+    }
+
+    // Good luck
+    public List<Notam> createNotams() {
+        var normalizerManager = Manager.getInstance().getNormalizerManager();
         var data = this.separateNotamData();
-        var notams = new ArrayList<>();
+        var notams = new ArrayList<Notam>();
 
-        for(List<String> fixedNotam : data) {
+        for(var fixedNotam : data) {
             var notam = new Notam();
             var index = 0;
 
             for(String entry : fixedNotam) {
                 //System.out.println(entry);
 
-                switch(index) {
-                    case 0 -> notam.setId(entry.substring(1));
-                }
-
-                var parts = entry.split("\\) ");
-                //Arrays.stream(parts).forEach(System.out::println);
-
-                index++;
+                normalizerManager.normalize(notam, entry, index++);
             }
 
             notams.add(notam);
         }
 
-        //notams.forEach(System.out::println);
+        notams.forEach(System.out::println);
+        return notams;
     }
 
     public List<List<String>> separateNotamData() {
@@ -62,8 +65,8 @@ public class NotamNormalizer {
         var startIndex = 0;
         var endIndex = 0;
 
-        for(String entry : data) {
-            var notamStart = NOTAM_START_PREDICATE.test(entry);
+        for(var entry : data) {
+            var notamStart = NOTAM_START.matcher(entry).find();
 
             index++;
 

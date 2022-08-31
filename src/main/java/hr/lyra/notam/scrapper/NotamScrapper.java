@@ -1,5 +1,6 @@
-package hr.lyra.scrapper;
+package hr.lyra.notam.scrapper;
 
+import hr.lyra.Manager;
 import hr.lyra.telegram.TelegramBotManager;
 import hr.lyra.utils.FileUtils;
 import hr.lyra.utils.Messages;
@@ -21,9 +22,11 @@ public class NotamScrapper {
     private static final URI NOTAM_URI = URI.create("https://amc.crocontrol.hr/amc/maps/getNOTAMsPDF");
 
     private final HttpClient client;
+    private final NotamNormalizer notamNormalizer;
 
     public NotamScrapper() {
         this.client = HttpClient.newBuilder().build();
+        this.notamNormalizer = new NotamNormalizer();
     }
 
     public void fetchNotams() {
@@ -33,11 +36,11 @@ public class NotamScrapper {
         this.client
             .sendAsync(builder, HttpResponse.BodyHandlers.ofFile(FileUtils.PDF))
             .thenAccept(httpResponse -> {
-                var bot = TelegramBotManager.getInstance();
-
+                var bot = Manager.getInstance().getTelegramBotManager();
                 var statusCode = httpResponse.statusCode();
+
                 if(statusCode != 200) {
-                    String message = Messages.toString(Messages.NOTAM_FETCH_FAILED)
+                    var message = Messages.toString(Messages.NOTAM_FETCH_FAILED)
                         .replace("{code}", String.valueOf(statusCode));
 
                     bot.sendMessage(message);
@@ -45,6 +48,7 @@ public class NotamScrapper {
                 }
 
                 this.pdfToTxt(httpResponse.body());
+                this.notamNormalizer.normalize();
             });
     }
 

@@ -1,4 +1,4 @@
-package hr.lyra.scrapper;
+package hr.lyra.notam.scrapper;
 
 import java.util.concurrent.TimeUnit;
 
