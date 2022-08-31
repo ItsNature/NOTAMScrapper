@@ -24,7 +24,7 @@ public class GeneralNormalizer extends Normalizer {
             .setFir(generalInformation[0])
             .setTraffic(generalInformation[2])
             .setPurpose(generalInformation[3].trim())
-            .setScope(generalInformation[4])
+            .setScope(generalInformation[4].trim())
             .setMinimumAltitude(generalInformation[5])
             .setMaximumAltitude(generalInformation[6])
             .setPosition(extra.substring(0, radiusIndex))

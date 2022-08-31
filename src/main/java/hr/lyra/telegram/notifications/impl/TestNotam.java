@@ -13,7 +13,7 @@ public class TestNotam extends Notification {
     }
 
     @Override
-    protected String message() {
-        return "New notam detected";
+    protected String message(Notam notam) {
+        return "New notam detected " + notam.toString();
     }
 }

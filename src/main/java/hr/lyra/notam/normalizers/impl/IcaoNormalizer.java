@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class IcaoNormalizer extends Normalizer {
 
-    private static final Pattern PATTERN = Pattern.compile("(?<=A[)]).*?(?=B[)])");
+    private static final Pattern PATTERN = Pattern.compile("(?<=A[)] ).*?(?= B[)])");
 
     @Override
     protected Pattern pattern() {
@@ -16,6 +16,6 @@ public class IcaoNormalizer extends Normalizer {
 
     @Override
     protected void result(Notam notam, String entry) {
-        notam.setIcao(entry.trim());
+        notam.setIcao(entry);
     }
 }
