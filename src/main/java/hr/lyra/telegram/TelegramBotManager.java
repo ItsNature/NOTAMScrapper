@@ -1,7 +1,11 @@
 package hr.lyra.telegram;
 
+import com.pengrad.telegrambot.Callback;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
+import com.pengrad.telegrambot.response.SendResponse;
+
+import java.io.IOException;
 
 public class TelegramBotManager {
 
@@ -16,7 +20,17 @@ public class TelegramBotManager {
     }
 
     public void sendMessage(String message) {
-        this.bot.execute(new SendMessage(this.chatId, message));
+        this.bot.execute(new SendMessage(this.chatId, message), new Callback<SendMessage, SendResponse>() {
+
+            @Override
+            public void onResponse(SendMessage message, SendResponse response) { }
+
+            @Override
+            public void onFailure(SendMessage message, IOException e) {
+                e.printStackTrace();
+            }
+        });
+
         System.out.println(message); // TODO
     }
 }
