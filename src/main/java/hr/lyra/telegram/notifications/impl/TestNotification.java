@@ -5,7 +5,7 @@ import hr.lyra.telegram.notifications.Notification;
 
 import java.util.function.Predicate;
 
-public class TestNotam extends Notification {
+public class TestNotification extends Notification {
 
     @Override
     protected Predicate<Notam> condition() {

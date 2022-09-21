@@ -20,7 +20,7 @@ public class StartTimeNormalizer extends Normalizer {
     protected void result(Notam notam, String entry) {
         try {
             var dateTime = TimeUtils.getDateAndTimeFrom(entry);
-            notam.setStartTime(dateTime.toInstant().toEpochMilli());
+            notam.setStartTime(dateTime);
         } catch(InvalidDateTimeException e) {
             e.printStackTrace();
         }

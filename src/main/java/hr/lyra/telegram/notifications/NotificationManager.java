@@ -2,7 +2,7 @@ package hr.lyra.telegram.notifications;
 
 import hr.lyra.Manager;
 import hr.lyra.notam.Notam;
-import hr.lyra.telegram.notifications.impl.TestNotam;
+import hr.lyra.telegram.notifications.impl.TestNotification;
 
 import java.util.Set;
 
@@ -11,7 +11,7 @@ public class NotificationManager {
     private final Set<Notification> notifications;
 
     public NotificationManager() {
-        this.notifications = Set.of(new TestNotam());
+        this.notifications = Set.of(new TestNotification());
     }
 
     public void checkNotifications(Notam notam) {

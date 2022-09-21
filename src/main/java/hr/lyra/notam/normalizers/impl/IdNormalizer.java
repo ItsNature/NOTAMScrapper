@@ -8,7 +8,7 @@ import java.util.function.BiPredicate;
 public class IdNormalizer extends Normalizer {
 
     @Override
-    protected BiPredicate<Integer, String> condition() {
+    protected BiPredicate<Integer, String> condition(Notam notam) {
         return (index, entry) -> index == 0;
     }
 

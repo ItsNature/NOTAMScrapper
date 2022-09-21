@@ -11,7 +11,7 @@ public abstract class Normalizer {
         return null;
     }
 
-    protected BiPredicate<Integer, String> condition() {
+    protected BiPredicate<Integer, String> condition(Notam notam) {
         return null;
     }
 

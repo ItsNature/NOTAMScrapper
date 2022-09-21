@@ -20,7 +20,7 @@ public class EndTimeNormalizer extends Normalizer {
     protected void result(Notam notam, String entry) {
         try {
             var dateTime = TimeUtils.getDateAndTimeFrom(entry);
-            notam.setEndTime(dateTime.toInstant().toEpochMilli());
+            notam.setEndTime(dateTime);
         } catch(InvalidDateTimeException e) {
             e.printStackTrace();
         }
