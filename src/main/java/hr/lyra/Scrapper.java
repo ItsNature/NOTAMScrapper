@@ -2,6 +2,8 @@ package hr.lyra;
 
 import hr.lyra.notam.scrapper.NotamScrapperThread;
 
+import java.util.logging.Logger;
+
 public class Scrapper {
 
     /**
@@ -10,20 +12,23 @@ public class Scrapper {
      * Write a readme file
      * Notifications: LDTR, Slunj, LDTRAU?
      * Google Maps API integration
-     * 1 min refresh rate
      * HR8XX take off and landing alerts
      * NATO QRA squawk alerts
      * Rename app
+     * Fix font warnings
      */
+
+    private static final Logger LOGGER = Logger.getLogger("Scrapper");
 
     public static void main(String[] args) {
         new Manager();
-
-        NotamScrapperThread thread = new NotamScrapperThread();
-        thread.start();
+        new NotamScrapperThread().start();
 
         // TODO: remove
-//        NotamNormalizer notamNormalizer = new NotamNormalizer();
-//        notamNormalizer.normalize();
+//      new NotamNormalizer().normalize();
+    }
+
+    public static void log(String message) {
+        LOGGER.info(message);
     }
 }

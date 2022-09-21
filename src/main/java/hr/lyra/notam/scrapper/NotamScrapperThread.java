@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 public class NotamScrapperThread extends Thread {
 
-    private static final long FETCH_RATE = TimeUnit.MINUTES.toMillis(5);
+    private static final long FETCH_RATE = TimeUnit.MINUTES.toMillis(1);
 
     private final NotamScrapper scrapper;
 

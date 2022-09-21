@@ -4,6 +4,7 @@ import com.pengrad.telegrambot.Callback;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.SendResponse;
+import hr.lyra.Scrapper;
 
 import java.io.IOException;
 
@@ -31,6 +32,6 @@ public class TelegramBotManager {
             }
         });
 
-        System.out.println(message); // TODO
+        Scrapper.log("Sending message to telegram: " + message);
     }
 }

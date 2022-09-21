@@ -1,6 +1,7 @@
 package hr.lyra.notam.scrapper;
 
 import hr.lyra.Manager;
+import hr.lyra.Scrapper;
 import hr.lyra.utils.FileUtils;
 import hr.lyra.utils.Messages;
 import org.apache.pdfbox.io.RandomAccessFile;
@@ -34,6 +35,8 @@ public class NotamScrapper {
     }
 
     public void fetchNotams() {
+        Scrapper.log("Fetching NOTAMs....");
+
         var builder = HttpRequest.newBuilder()
             .uri(NOTAM_URI).GET().build();
 
@@ -48,6 +51,7 @@ public class NotamScrapper {
                         .replace("{code}", String.valueOf(statusCode));
 
                     bot.sendMessage(message);
+                    Scrapper.log("Failed to fetch NOTAMs");
                     return;
                 }
 
@@ -59,17 +63,15 @@ public class NotamScrapper {
     private void pdfToTxt(Path path) {
         var file = path.toFile();
 
-        PDFParser parser;
         try {
-            parser = new PDFParser(new RandomAccessFile(file, "r"));
-            parser.parse();
-
-            var pdDoc = new PDDocument(parser.getDocument());
-            var text = new PDFTextStripper().getText(pdDoc);
+            var document = PDDocument.load(file);
+            var text = new PDFTextStripper().getText(document);
             var writer = new PrintWriter(FileUtils.TXT_NAME);
 
             writer.print(text);
             writer.close();
+
+            document.close();
         } catch(IOException e) {
             e.printStackTrace();
         }

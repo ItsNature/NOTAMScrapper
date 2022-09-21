@@ -83,7 +83,7 @@ public enum Airport {
     static {
         ICAO_TO_AIRPORT = new HashMap<>();
 
-        for(Airport airport : Airport.values()) {
+        for(var airport : Airport.values()) {
             ICAO_TO_AIRPORT.put(airport.getIcao(), airport);
         }
     }

@@ -1,5 +1,7 @@
 package hr.lyra.database;
 
+import hr.lyra.Scrapper;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -35,7 +37,7 @@ public class DatabaseManager {
         try {
             return DriverManager.getConnection(url, props);
         } catch (SQLException e) {
-            System.out.println("Postgres connection failed");
+            Scrapper.log("Postgres connection failed");
             throw new RuntimeException(e);
         }
     }

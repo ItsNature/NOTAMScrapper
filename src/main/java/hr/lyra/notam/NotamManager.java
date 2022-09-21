@@ -1,6 +1,7 @@
 package hr.lyra.notam;
 
 import hr.lyra.Manager;
+import hr.lyra.Scrapper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,5 +28,7 @@ public class NotamManager {
 
             this.notams.put(id, notam);
         });
+
+        Scrapper.log("Updated NOTAMs");
     }
 }
