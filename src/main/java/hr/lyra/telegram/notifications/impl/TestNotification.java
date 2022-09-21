@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 public class TestNotification extends Notification {
 
     @Override
-    protected Predicate<Notam> condition() {
+    protected Predicate<Notam> trigger() {
         return notam -> true;
     }
 

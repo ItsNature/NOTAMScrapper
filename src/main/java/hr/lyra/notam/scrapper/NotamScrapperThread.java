@@ -10,6 +10,7 @@ public class NotamScrapperThread extends Thread {
 
     public NotamScrapperThread() {
         this.scrapper = new NotamScrapper();
+        this.scrapper.createDataDirectory();
 
         this.setName("notam-scrapper");
         this.setUncaughtExceptionHandler((t, e) -> e.printStackTrace());

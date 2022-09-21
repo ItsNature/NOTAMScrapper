@@ -43,8 +43,6 @@ public class NotamNormalizer {
             var index = 0;
 
             for(var entry : fixedNotam) {
-                //System.out.println(entry);
-
                 normalizerManager.normalize(notam, entry, index++);
             }
 

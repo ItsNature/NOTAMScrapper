@@ -18,7 +18,7 @@ public class NotificationManager {
         var telegramBotManager = Manager.getInstance().getTelegramBotManager();
 
         this.notifications.stream()
-            .filter(notification -> notification.condition().test(notam))
+            .filter(notification -> notification.trigger().test(notam))
             .forEach(notification -> telegramBotManager.sendMessage(notification.message(notam)));
     }
 }

@@ -1,7 +1,6 @@
 package hr.lyra.notam.scrapper;
 
 import hr.lyra.Manager;
-import hr.lyra.telegram.TelegramBotManager;
 import hr.lyra.utils.FileUtils;
 import hr.lyra.utils.Messages;
 import org.apache.pdfbox.io.RandomAccessFile;
@@ -9,6 +8,7 @@ import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URI;
@@ -27,6 +27,10 @@ public class NotamScrapper {
     public NotamScrapper() {
         this.client = HttpClient.newBuilder().build();
         this.notamNormalizer = new NotamNormalizer();
+    }
+
+    public void createDataDirectory() {
+        new File(FileUtils.DIRECTORY).mkdirs();
     }
 
     public void fetchNotams() {
@@ -60,16 +64,13 @@ public class NotamScrapper {
             parser = new PDFParser(new RandomAccessFile(file, "r"));
             parser.parse();
 
-            var cosDoc = parser.getDocument();
-            var pdfStripper = new PDFTextStripper();
-            var pdDoc = new PDDocument(cosDoc);
-
-            var text = pdfStripper.getText(pdDoc);
+            var pdDoc = new PDDocument(parser.getDocument());
+            var text = new PDFTextStripper().getText(pdDoc);
             var writer = new PrintWriter(FileUtils.TXT_NAME);
 
             writer.print(text);
             writer.close();
-        } catch (IOException e) {
+        } catch(IOException e) {
             e.printStackTrace();
         }
     }
