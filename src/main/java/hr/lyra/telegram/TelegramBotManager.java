@@ -17,5 +17,6 @@ public class TelegramBotManager {
 
     public void sendMessage(String message) {
         this.bot.execute(new SendMessage(this.chatId, message));
+        System.out.println(message); // TODO
     }
 }

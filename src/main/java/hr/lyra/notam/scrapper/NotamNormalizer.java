@@ -49,7 +49,7 @@ public class NotamNormalizer {
             notams.add(notam);
         }
 
-        notams.forEach(System.out::println);
+        //notams.forEach(System.out::println);
         return notams;
     }
 
